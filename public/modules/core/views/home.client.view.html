@@ -1,0 +1,10 @@
+<section data-ng-controller="HomeController" data-ng-init="getNearestCustomers()">
+    <div>
+        Hello World
+    </div>
+    <div data-ng-repeat="customer in customers track by $index" class="row">
+        <div class="col-md-4">{{customer.name}}</div>
+        <div class="col-md-4">{{customer.user_id}}</div>
+        <div class="col-md-4">{{customer.distance}}</div>
+        </div>
+</section>
