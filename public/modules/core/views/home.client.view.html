@@ -1,7 +1,15 @@
-<section data-ng-controller="HomeController" data-ng-init="getNearestCustomers()">
-    <div>
-        Hello World
-    </div>
+<section data-ng-controller="HomeController">
+    <form>
+        <div class="input-group">
+            <input type="number" class="form-control" data-ng-model="searchDistance">
+					<span class="input-group-btn">
+						<button class="btn btn-default clearBtn" role="button" type="submit"
+                                ng-click="getNearestCustomers(searchDistance)">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                        </button>
+					</span>
+        </div>
+    </form>
     <div data-ng-repeat="customer in customers track by $index" class="row">
         <div class="col-md-4">{{customer.name}}</div>
         <div class="col-md-4">{{customer.user_id}}</div>

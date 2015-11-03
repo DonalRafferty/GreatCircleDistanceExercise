@@ -6,12 +6,12 @@
 
 var fileToJSON = require('./fileToJSON.server.utility');
 
-exports.getCustomerDistances = function (callback) {
+exports.getCustomerDistances = function (distance, callback) {
     fileToJSON.convertCustomerFileToJSON(function (jsonData) {
         var closeCustomers = [];
         jsonData.forEach(function (jsonObject) {
             jsonObject.distance = getDistanceFromLatLonInKm(jsonObject.latitude, jsonObject.longitude, 53.3381985, -6.2592576);
-            if(closeEnoughToOffice(jsonObject, 100)){
+            if(closeEnoughToOffice(jsonObject, distance)){
                 closeCustomers.push(jsonObject);
             }
         });
