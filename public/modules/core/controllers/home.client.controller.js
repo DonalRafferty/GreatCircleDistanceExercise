@@ -13,6 +13,6 @@ angular.module('core').controller('HomeController', ['$scope', '$http',
             }).error(function (response) {
                 $scope.error = response.message; //Something failed, likely incorrect post body
             });
-        }
+        };
 	}
 ]);

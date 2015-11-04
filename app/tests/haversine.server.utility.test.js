@@ -90,7 +90,7 @@ describe('Haeversine tests', function () {
             done();
         });
         it('closeEnoughToOffice function returns false if no distance is supplied', function (done) {
-            var mockCustomer = {name: 'tester3', distance: 105}, mockDistance = undefined;
+            var mockCustomer = {name: 'tester3', distance: 105}, mockDistance = null;
             expect(closeEnoughToOfficeMock(mockCustomer, mockDistance)).to.equal(false);
             done();
         });

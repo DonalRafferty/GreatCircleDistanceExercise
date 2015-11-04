@@ -7,25 +7,13 @@
 var fileToJSON = require('./fileToJSON.server.utility');
 
 /**
- * Exposed function for starting the chain to retrieve the customers
- * and then apply the haversine formula on each customer to find out
- * their given distance from the supplied point
- * @param distance
- * @param callback
+ * Helper function to turn degress into radians
+ * @param deg
+ * @returns {number}
  */
-exports.getCustomerDistances = function (distance, callback) {
-    fileToJSON.convertCustomerFileToJSON(function (jsonData) {
-        var closeCustomers = [];
-        jsonData.forEach(function (jsonObject) {
-            jsonObject.distance = getDistanceFromLatLonInKm(jsonObject.latitude, jsonObject.longitude, 53.3381985, -6.2592576); //TODO: Currently hardcoded the centre point to calc distance from, make this dynamic
-            if(closeEnoughToOffice(jsonObject, distance)){ //only interested in customers close enough to the given point
-                closeCustomers.push(jsonObject);
-            }
-        });
-        sortCustomers(closeCustomers); //sort the array
-        callback(closeCustomers); //send data back to controller
-    });
-};
+function deg2rad(deg) {
+    return deg * (Math.PI / 180);
+}
 
 /**
  * Helper function that performs the haversine calculation
@@ -39,7 +27,7 @@ exports.getCustomerDistances = function (distance, callback) {
  */
 function getDistanceFromLatLonInKm(latitude1, longitude1, latitude2, longitude2) {
     var EarthRadius = 6371; // Radius of the earth in km
-    var degreeLatitude = deg2rad(latitude2 - latitude1);  // deg2rad below
+    var degreeLatitude = deg2rad(latitude2 - latitude1);  // deg2rad above
     var degreeLongitude = deg2rad(longitude2 - longitude1);
     var equationPartA = Math.sin(degreeLatitude / 2) * Math.sin(degreeLatitude / 2) +
         Math.cos(deg2rad(latitude1)) * Math.cos(deg2rad(latitude2)) *
@@ -47,15 +35,6 @@ function getDistanceFromLatLonInKm(latitude1, longitude1, latitude2, longitude2)
     var equationPartB = 2 * Math.atan2(Math.sqrt(equationPartA), Math.sqrt(1 - equationPartA));
     var distance = EarthRadius * equationPartB; // Distance in km
     return distance;
-}
-
-/**
- * Helper function to turn degress into radians
- * @param deg
- * @returns {number}
- */
-function deg2rad(deg) {
-    return deg * (Math.PI / 180)
 }
 
 /**
@@ -89,4 +68,25 @@ function sortCustomers(customersArray){
         return 0;
     });
 }
+
+/**
+ * Exposed function for starting the chain to retrieve the customers
+ * and then apply the haversine formula on each customer to find out
+ * their given distance from the supplied point
+ * @param distance
+ * @param callback
+ */
+exports.getCustomerDistances = function (distance, callback) {
+    fileToJSON.convertCustomerFileToJSON(function (jsonData) {
+        var closeCustomers = [];
+        jsonData.forEach(function (jsonObject) {
+            jsonObject.distance = getDistanceFromLatLonInKm(jsonObject.latitude, jsonObject.longitude, 53.3381985, -6.2592576); //TODO: Currently hardcoded the centre point to calc distance from, make this dynamic
+            if(closeEnoughToOffice(jsonObject, distance)){ //only interested in customers close enough to the given point
+                closeCustomers.push(jsonObject);
+            }
+        });
+        sortCustomers(closeCustomers); //sort the array
+        callback(closeCustomers); //send data back to controller
+    });
+};
 
