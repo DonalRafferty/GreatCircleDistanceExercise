@@ -28,6 +28,7 @@
     "lodash": "~2.4.1",
     "method-override": "~2.3.0",
     "morgan": "~1.4.1",
+    "rewire": "^2.3.4",
     "swig": "~1.4.1"
   },
   "devDependencies": {

@@ -39,5 +39,17 @@
             // Test scope value
             expect(scope.customers).toEqual([exampleUser]);
         });
+        it('should return an error message when no distance is supplied', function() {
+            // Test expected POST request
+            $httpBackend.expectPOST('/customers/local').respond(400, {
+                message: 'Please supply a distance'
+            });
+
+            scope.getNearestCustomers();
+            $httpBackend.flush();
+
+            // Test scope value
+            expect(scope.error).toEqual('Please supply a distance');
+        });
     });
 })();

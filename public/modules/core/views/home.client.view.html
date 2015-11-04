@@ -1,4 +1,6 @@
 <section data-ng-controller="HomeController">
+    <div id="wrapper" class="col-md-8 col-md-offset-2" style="margin-top: 5em;">
+        <div>Enter a distance value for customers within range (EG: 100)</div>
     <form>
         <div class="input-group">
             <input type="number" class="form-control" data-ng-model="searchDistance">
@@ -15,4 +17,6 @@
         <div class="col-md-4">{{customer.user_id}}</div>
         <div class="col-md-4">{{customer.distance}}</div>
         </div>
+    <div>{{error}}</div>
+    </div>
 </section>
