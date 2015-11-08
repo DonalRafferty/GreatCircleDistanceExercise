@@ -3,7 +3,7 @@
 module.exports = function(app){
     var customers = require('../../app/controllers/customers.server.controller');
 
-    // Report Analysis routes
+    // Customers routes
     app.route('/customers/local')
         .post(customers.list);
 
